@@ -191,7 +191,8 @@
      ```console
      kubectl create deployment cars --image=cars --dry-run=client -o yaml > cars.yaml
      ```
-  yaml file will look like this, add `imagePullPolicy: Never` to avoid image pull on service restart
+      yaml file will look like this, add `imagePullPolicy: Never` to avoid image pull on service restart
+   
      ```yaml
      apiVersion: apps/v1
      kind: Deployment
