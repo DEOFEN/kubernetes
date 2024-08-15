@@ -1,5 +1,127 @@
 
-## 1. Create Project
+## 1. Deploy mongodb service in kubernetes cluster
+
+1. Create mongodb deployment file
+   
+   ```yaml
+   # mongo.yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: mongo
+   spec:
+     replicas: 1
+     selector:
+       matchLabels:
+         app: mongo
+     template:
+       metadata:
+         labels:
+           app: mongo
+       spec:
+         containers:
+         - name: mongo
+           image: mongo:5.0
+           ports:
+           - containerPort: 27017
+           env:
+           - name: MONGO_INITDB_ROOT_USERNAME
+             value: "admin"
+           - name: MONGO_INITDB_ROOT_PASSWORD
+             value: "password"
+   ```
+<br>
+
+2. Create mongodb service file
+   
+   ```yaml
+   # mongo-service.yaml
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: mongo-service
+   spec:
+     selector:
+       app: mongo
+     ports:
+     - protocol: TCP
+       port: 27017
+       targetPort: 27017
+     type: ClusterIP
+   ```
+<br>
+
+3. Apply configurations for above files using command 
+   
+   ```console
+   kubectl apply -f mongo.yaml
+   kubectl apply -f mongo-service.yaml
+   ```
+<br>
+
+4. Verify service 
+  
+  ```console
+  kubectl get services
+  ```
+<br>
+
+5. For persistant storage update deployments file and create svc file
+   
+   ```yaml
+   # mongo.yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: mongo
+   spec:
+     replicas: 1
+     selector:
+       matchLabels:
+         app: mongo
+     template:
+       metadata:
+         labels:
+           app: mongo
+       spec:
+         containers:
+         - name: mongo
+           image: mongo:5.0
+           ports:
+           - containerPort: 27017
+           env:
+           - name: MONGO_INITDB_ROOT_USERNAME
+             value: "admin"
+           - name: MONGO_INITDB_ROOT_PASSWORD
+             value: "password"
+   ```
+
+   ```yaml
+   # mongo-pvc.yaml
+   apiVersion: v1
+   kind: PersistentVolumeClaim
+   metadata:
+     name: mongo-pvc
+   spec:
+     accessModes:
+       - ReadWriteOnce
+     resources:
+       requests:
+         storage: 1Gi
+   ```
+<br>
+
+6. Apply svc configurations 
+   
+   ```console
+   kubectl apply -f mongo-pvc.yaml
+   kubectl apply -f mongo.yaml
+   ```
+
+<br><br>
+
+
+## 2. Create Project
 
 1. Create nodejs project. In this example we are taking name of project as cars
 <br>
@@ -30,7 +152,7 @@
 
 <br><br>
 
-## 2. Create docker image
+## 3. Create docker image
 
 1. Create docker image using command in the base directory of the project
   
@@ -47,7 +169,7 @@
 
 <br><br>
 
-## 3. Deploy on minikube kubernetes
+## 4. Deploy on minikube kubernetes
 
 1. Load cars docker image to minikube using command
 
