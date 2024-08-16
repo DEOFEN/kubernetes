@@ -17,7 +17,7 @@
      ```
 <br>
 
-2. Delete minikube image using command
+3. Delete minikube image using command
   
      ```console
      minikube image rm cars
