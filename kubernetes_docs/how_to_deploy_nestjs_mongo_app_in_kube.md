@@ -3,12 +3,12 @@
 # Deploy nestjs app with mongodb in kubernetes
 
 
-
+<p>
 <img width="80" height="80" src="https://github.com/user-attachments/assets/e8c5b001-3ff6-41e0-8857-4c6bddd457a4"/>
 <img width="80" height="80" src="https://github.com/user-attachments/assets/4484d928-02d8-475e-a074-f1a914c542a5"/>
 <img width="80" height="80" src="https://github.com/user-attachments/assets/16f75895-7415-4ba1-9288-074801337413"/>
 <img width="80" height="80" src="https://github.com/user-attachments/assets/481ef48c-d29a-463a-9f72-e6677631f8ac"/>
-
+</p>
 
 
 
